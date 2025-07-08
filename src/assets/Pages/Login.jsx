@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FiMail, FiLock, FiEye, FiEyeOff, FiUser, FiPhone, FiInstagram } from 'react-icons/fi';
-import { FcGoogle } from 'react-icons/fc';
+import { FiMail, FiLock, FiEye, FiEyeOff, FiUser } from 'react-icons/fi';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -45,15 +44,6 @@ const Login = () => {
     }, 1500);
   };
 
-  // Social login handlers
-  const handleInstagramLogin = () => {
-    window.open('https://www.instagram.com/', '_blank');
-  };
-
-  const handleGoogleLogin = () => {
-    window.open('https://accounts.google.com/', '_blank');
-  };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
       <div className="relative w-full max-w-md px-4">
@@ -75,35 +65,6 @@ const Login = () => {
           <p className="text-gray-500 text-center mb-8">
             Sign in to your DevLinker account
           </p>
-
-          {/* Social Login Buttons */}
-          <div className="grid grid-cols-2 gap-4 mb-8">
-            <button 
-              onClick={handleInstagramLogin}
-              className="flex items-center justify-center py-3 px-4 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-lg hover:from-pink-600 hover:to-purple-700 transition-all shadow hover:shadow-md"
-            >
-              <FiInstagram className="h-5 w-5 mr-2" />
-              Instagram
-            </button>
-            
-            <button 
-              onClick={handleGoogleLogin}
-              className="flex items-center justify-center py-3 px-4 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-all shadow hover:shadow-md"
-            >
-              <FcGoogle className="h-5 w-5 mr-2" />
-              Google
-            </button>
-          </div>
-
-          {/* Divider */}
-          <div className="relative my-8">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300"></div>
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-white text-gray-500">Or sign in with email</span>
-            </div>
-          </div>
 
           {/* Error message */}
           {error && (

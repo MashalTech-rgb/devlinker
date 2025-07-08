@@ -1,5 +1,6 @@
 import React from 'react'
-import { Routes,Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
+
 import DashboardLayout from './assets/Pages/DashboardLayout'
 import Profile from './assets/Component/Profile'
 import Projects from './assets/Component/Projects'
@@ -8,24 +9,38 @@ import Setting from './assets/Component/Setting'
 import Home from './assets/Pages/Home'
 import Login from './assets/Pages/Login'
 import SignUp from './assets/Pages/SignUp'
+import Dashboard from './assets/Pages/Dashboard'
+import SignOut from './assets/Pages/SignOut'
+import NotFound from "./assets/Pages/NotFound"
+import { UserProvider } from './assets/Context/UserContext'
+
 
 const App = () => {
   return (
     <div>
-      <Routes>
-        <Route path='/' element={<Home/>}/>
-        
-     
+     <UserProvider>
+        <Routes>
+          {/* Public Routes */}
+          <Route path='/' element={<Home />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/signup' element={<SignUp />} />
 
-        <Route path='/login' element={<Login/>}/>
-         <Route path='/SignUp' element={<SignUp/>}/>
+          {/* Dashboard Layout with nested pages */}
+          <Route path="/dashboard" element={<DashboardLayout />}>
+            <Route index element={<Navigate to="home" replace />} />
+            <Route path="home" element={<Dashboard/>} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="projects" element={<Projects />} />
+            <Route path="skills" element={<Skills />} />
+            <Route path="settings" element={<Setting />} />
+            <Route path="SignOut" element={<SignOut />} /> 
+          </Route>
           
-        <Route path='/dashboard' element={<DashboardLayout/>}/>
-        <Route path='Profile' element={<Profile/>}/>
-        <Route path='Projects' element={<Projects/>}/>
-        <Route path='Skills' element={<Skills/>}/>
-        <Route path='Settings' element={<Setting/>}/>
-      </Routes>
+          {/* Not Found Route */}
+          <Route path="/NotFound" element={<NotFound />} />
+          <Route path="*" element={<Navigate to="/NotFound" replace />} />
+        </Routes>
+   </UserProvider>
     </div>
   )
 }
