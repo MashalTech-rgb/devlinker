@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Footer from "../Component/Footer";
 
 const features = [
   {
@@ -259,13 +260,13 @@ const Home = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              to="/signup"
+              to="/Contactus"
               className="px-8 py-4 bg-white text-blue-600 rounded-lg font-bold hover:bg-gray-100 transition-all transform hover:-translate-y-1 shadow-lg hover:shadow-xl"
             >
-              Get Started for Free
+              Get in Touch
             </Link>
             <Link
-              to="/demo"
+              to="/"
               className="px-8 py-4 border-2 border-white text-white rounded-lg font-bold hover:bg-white/10 transition-all transform hover:-translate-y-1"
             >
               See Live Demo
@@ -346,30 +347,35 @@ const Home = () => {
                 title: "E-commerce Dashboard",
                 desc: "A modern admin dashboard with analytics and product management",
                 tags: ["React", "Tailwind", "Chart.js"],
-                link: "#",
+                link: "https://e-commerce-vnh8.vercel.app/",
+                 image: "/public/E-commerce.png",
               },
               {
                 title: "Portfolio Builder",
                 desc: "Interactive portfolio builder with theme customization",
                 tags: ["Next.js", "Firebase", "Framer Motion"],
                 link: "#",
+                  image: "/images/portfolio-builder.png",
               },
               {
-                title: "Task Management App",
-                desc: "Collaborative task management with real-time updates",
+                title: "Quiz App",
+                desc: "An interactive and responsive quiz app to test knowledge across various topics with real-time scoring and smooth UI.",
                 tags: ["React", "Node.js", "WebSockets"],
-                link: "#",
+                link: "https://app-eight-ebon.vercel.app/",
+                  image: "/public/Quiz app.png",
               },
             ].map((project, index) => (
               <div
                 key={index}
                 className="bg-gray-50 dark:bg-gray-800 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 group"
               >
-                <div className="h-48 bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center">
-                  <div className="text-white text-4xl font-bold opacity-80">
-                    {index + 1}
-                  </div>
-                </div>
+                  <div className="h-48 overflow-hidden">
+      <img
+        src={project.image}
+        alt={project.title}
+        className="w-full h-full object-cover"
+      />
+    </div>
                 <div className="p-6">
                   <h3 className="text-xl font-bold mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition">
                     {project.title}
@@ -410,26 +416,7 @@ const Home = () => {
             ))}
           </div>
 
-          <div className="text-center mt-12">
-            <Link
-              to="/projects"
-              className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-lg hover:from-blue-700 hover:to-indigo-800 transition-all transform hover:-translate-y-1 shadow-lg hover:shadow-xl inline-flex items-center"
-            >
-              View All Projects
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 ml-2"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </Link>
-          </div>
+          
         </div>
       </section>
 
@@ -438,7 +425,7 @@ const Home = () => {
 <section className="py-20 px-6 bg-gray-50 dark:bg-gray-900">
   <div className="max-w-7xl mx-auto">
     <div className="text-center max-w-3xl mx-auto mb-16">
-      <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent inline-block">
+      <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent inline-block">
         My Skills
       </h2>
       <p className="text-xl text-gray-600 dark:text-gray-300 mt-3">
@@ -472,191 +459,9 @@ const Home = () => {
 </section>
 
 
-      {/* Enhanced Footer */}
-      <footer className="bg-gradient-to-br from-blue-700 to-blue-900 text-white pt-20 pb-12 px-6 relative overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute -top-20 -left-20 w-64 h-64 bg-gradient-to-r from-white/10 to-blue-200/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-r from-blue-400/10 to-white/10 rounded-full blur-3xl"></div>
+      <Footer/>
+ 
 
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 mb-16">
-            {/* Brand info */}
-            <div className="lg:col-span-2">
-              <div className="flex items-center mb-6">
-                <div className="bg-gradient-to-r from-white to-blue-200 w-10 h-10 rounded-lg flex items-center justify-center transform transition-transform duration-300 hover:rotate-12">
-                  <span className="text-blue-800 font-bold text-xl">D</span>
-                </div>
-                <span className="text-3xl font-bold bg-gradient-to-r from-white to-blue-300 bg-clip-text text-transparent ml-3">
-                  DevLinker
-                </span>
-              </div>
-              <p className="text-white/80 mb-6 max-w-md">
-                Empowering developers to showcase their work with beautiful,
-                professional portfolios in minutes.
-              </p>
-              <div className="flex space-x-4">
-                {["github", "twitter", "linkedin", "dribbble"].map((social) => (
-                  <a
-                    key={social}
-                    href="#"
-                    className="w-10 h-10 rounded-full bg-blue-800 hover:bg-blue-600 flex items-center justify-center transition-colors duration-300 group"
-                    aria-label={social}
-                  >
-                    <div className="text-white group-hover:text-blue-100 transition-colors duration-300">
-                      {social.charAt(0).toUpperCase()}
-                    </div>
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            {/* Quick links */}
-            <div>
-              <h3 className="text-white font-bold text-xl mb-6 flex items-center">
-                <span className="bg-white w-1.5 h-1.5 rounded-full mr-2"></span>
-                Quick Links
-              </h3>
-              <ul className="space-y-3">
-                {["Home", "Features", "Pricing", "Templates", "Showcase"].map(
-                  (link) => (
-                    <li key={link}>
-                      <a
-                        href="#"
-                        className="text-white/80 hover:text-white transition-colors duration-300 flex items-center"
-                      >
-                        <svg
-                          className="w-4 h-4 mr-2 text-white"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M9 5l7 7-7 7"
-                          />
-                        </svg>
-                        {link}
-                      </a>
-                    </li>
-                  )
-                )}
-              </ul>
-            </div>
-
-            {/* Contact info */}
-            <div>
-              <h3 className="text-white font-bold text-xl mb-6 flex items-center">
-                <span className="bg-white w-1.5 h-1.5 rounded-full mr-2"></span>
-                Get In Touch
-              </h3>
-              <address className="not-italic space-y-4">
-                <div className="flex items-start">
-                  <div className="bg-white/10 p-2 rounded-lg mr-3">
-                    <svg
-                      className="w-5 h-5 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                      />
-                    </svg>
-                  </div>
-                  <a
-                    href="mailto:hello@devlinker.com"
-                    className="text-white/80 hover:text-white transition-colors duration-300"
-                  >
-                    hello@devlinker.com
-                  </a>
-                </div>
-                <div className="flex items-start">
-                  <div className="bg-white/10 p-2 rounded-lg mr-3">
-                    <svg
-                      className="w-5 h-5 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                      />
-                    </svg>
-                  </div>
-                  <a
-                    href="tel:+15551234567"
-                    className="text-white/80 hover:text-white transition-colors duration-300"
-                  >
-                    +1 (555) 123-4567
-                  </a>
-                </div>
-                <div className="flex items-start">
-                  <div className="bg-white/10 p-2 rounded-lg mr-3">
-                    <svg
-                      className="w-5 h-5 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                      />
-                    </svg>
-                  </div>
-                  <span className="text-white/80">San Francisco, CA</span>
-                </div>
-              </address>
-            </div>
-          </div>
-
-          {/* Divider */}
-          <div className="border-t border-white/10 my-8"></div>
-
-          {/* Bottom section */}
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-white/60 text-sm mb-4 md:mb-0">
-              © {new Date().getFullYear()} DevLinker. All rights reserved.
-            </p>
-            <div className="flex space-x-6">
-              <a
-                href="#"
-                className="text-white/60 hover:text-white text-sm transition-colors duration-300"
-              >
-                Privacy Policy
-              </a>
-              <a
-                href="#"
-                className="text-white/60 hover:text-white text-sm transition-colors duration-300"
-              >
-                Terms of Service
-              </a>
-              <a
-                href="#"
-                className="text-white/60 hover:text-white text-sm transition-colors duration-300"
-              >
-                Cookies
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };

@@ -1,6 +1,6 @@
+// src/App.js
 import React from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
-
 import DashboardLayout from './assets/Pages/DashboardLayout'
 import Profile from './assets/Component/Profile'
 import Projects from './assets/Component/Projects'
@@ -13,18 +13,30 @@ import Dashboard from './assets/Pages/Dashboard'
 import SignOut from './assets/Pages/SignOut'
 import NotFound from "./assets/Pages/NotFound"
 import { UserProvider } from './assets/Context/UserContext'
+import ContactUs from './assets/Pages/Contactus'
+import { useUser } from './assets/Context/UserContext'
 
+const AppWrapper = () => {
+  return (
+    <UserProvider>
+      <App />
+    </UserProvider>
+  )
+}
 
 const App = () => {
+  const { darkMode } = useUser();
+  
   return (
-    <div>
-     <UserProvider>
+    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-white'}`}>
+      <div className={`min-h-screen ${darkMode ? 'text-gray-100' : 'text-gray-800'}`}>
         <Routes>
           {/* Public Routes */}
           <Route path='/' element={<Home />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
-
+          <Route path='/contactus' element={<ContactUs/>} />
+          
           {/* Dashboard Layout with nested pages */}
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route index element={<Navigate to="home" replace />} />
@@ -37,12 +49,11 @@ const App = () => {
           </Route>
           
           {/* Not Found Route */}
-          <Route path="/NotFound" element={<NotFound />} />
-          <Route path="*" element={<Navigate to="/NotFound" replace />} />
+          <Route path="*" element={<NotFound/>} />
         </Routes>
-   </UserProvider>
+      </div>
     </div>
   )
 }
 
-export default App
+export default AppWrapper

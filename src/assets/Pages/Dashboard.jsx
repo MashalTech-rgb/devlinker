@@ -6,15 +6,17 @@ import {
   FaChartBar, FaCog,
   FaUser, FaStar, FaHome
 } from 'react-icons/fa';
+import { useUser } from '../Context/UserContext';
 
 const Dashboard = () => {
   const [activeTimeframe, setActiveTimeframe] = useState('year');
+  const { darkMode } = useUser();
 
   // Sample data for dashboard
   const stats = [
-    { id: 1, title: "Active Projects", value: 6, icon: <FaProjectDiagram className="text-blue-500" />, change: "+2 this month" },
-    { id: 2, title: "Completed Tasks", value: 42, icon: <FaCheckCircle className="text-green-500" />, change: "78% completion" },
-    { id: 3, title: "Team Members", value: 12, icon: <FaUserFriends className="text-indigo-500" />, change: "3 online now" },
+    { id: 1, title: "Active Projects", value: 2, icon: <FaProjectDiagram className="text-blue-500" />, change: "+2 this month" },
+    { id: 2, title: "Completed Tasks", value: 6, icon: <FaCheckCircle className="text-green-500" />, change: "78% completion" },
+    { id: 3, title: "Skills Mastered", value: 8, icon: <FaStar className="text-yellow-500" />, change: "+3 this month" },
     { id: 4, title: "Revenue", value: "$24.5K", icon: <FaChartLine className="text-purple-500" />, change: "+12.5% from last month" }
   ];
 
@@ -65,9 +67,11 @@ const Dashboard = () => {
 
   // Top Navigation Bar Component
   const TopNavBar = () => (
-    <div className="bg-white shadow-md py-3 px-6 flex items-center justify-between">
+    <div className={`shadow-md py-3 px-6 flex items-center justify-between ${
+      darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-100'
+    }`}>
       <div className="flex items-center space-x-4">
-        <Link to="/" className="text-indigo-600 hover:text-indigo-800">
+        <Link to="/" className={`${darkMode ? 'text-indigo-400 hover:text-indigo-300' : 'text-indigo-600 hover:text-indigo-800'}`}>
           <FaHome className="text-xl" />
         </Link>
       </div>
@@ -77,7 +81,7 @@ const Dashboard = () => {
           <div className="bg-gradient-to-r from-indigo-400 to-purple-500 w-8 h-8 rounded-full flex items-center justify-center text-white font-bold mr-2">
             MI
           </div>
-          <span className="font-medium">Mashal Ibrar</span>
+          <span className={`font-medium ${darkMode ? 'text-white' : 'text-gray-800'}`}>Mashal Ibrar</span>
         </div>
       </div>
     </div>
@@ -117,8 +121,8 @@ const Dashboard = () => {
         </svg>
         
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-xl font-bold">65%</span>
-          <span className="text-xs text-gray-500">In Progress</span>
+          <span className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-800'}`}>65%</span>
+          <span className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>In Progress</span>
         </div>
       </div>
     );
@@ -130,10 +134,24 @@ const Dashboard = () => {
     const maxValue = Math.max(...data.map(item => item.revenue), 0) || 1;
     const colors = ["#6366f1", "#10b981", "#f59e0b", "#8b5cf6", "#ec4899"];
 
+    const chartHeight = 200;
+    const barWidth = 30;
+    const spacing = 20;
+
+    const getX = (index) => index * (barWidth + spacing) + barWidth / 2;
+    const getY = (value) => chartHeight - (value / maxValue) * chartHeight;
+
+    const svgWidth = data.length * (barWidth + spacing);
+    const svgHeight = chartHeight + 40;
+
     return (
-      <div className="bg-white rounded-xl shadow-md p-6">
+      <div className={`rounded-xl shadow-md p-6 ${
+        darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-100'
+      }`}>
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-6">
-          <h2 className="text-xl font-bold text-gray-800">
+          <h2 className={`text-xl font-bold ${
+            darkMode ? 'text-white' : 'text-gray-800'
+          }`}>
             {activeTimeframe === 'year' ? 'Yearly' : 
              activeTimeframe === 'quarter' ? 'Quarterly' : 'Monthly'} Revenue Performance
           </h2>
@@ -145,7 +163,9 @@ const Dashboard = () => {
                 className={`px-3 py-1 text-sm rounded-full transition-colors ${
                   activeTimeframe === timeframe
                     ? 'bg-indigo-600 text-white'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    : darkMode 
+                      ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                 }`}
               >
                 {timeframe.charAt(0).toUpperCase() + timeframe.slice(1)}
@@ -154,64 +174,108 @@ const Dashboard = () => {
           </div>
         </div>
         
-        <div className="flex items-end justify-between h-64 mt-8">
-          {data.map((item, index) => (
-            <div key={index} className="flex flex-col items-center flex-1 px-1">
-              <div className="flex flex-col items-center w-full">
-                <div 
-                  className="w-full bg-gradient-to-t from-indigo-500 to-purple-500 rounded-t-lg transition-all duration-300"
-                  style={{ 
-                    height: `${(item.revenue / maxValue) * 100}%`,
-                    minHeight: '4px',
-                    backgroundColor: colors[index % colors.length]
-                  }}
-                ></div>
-                <div className="text-xs text-gray-600 mt-2 text-center">
+        <div className="overflow-auto">
+          <svg width={svgWidth} height={svgHeight}>
+            {/* Bars */}
+            {data.map((item, index) => {
+              const barHeight = (item.revenue / maxValue) * chartHeight;
+              return (
+                <rect
+                  key={index}
+                  x={index * (barWidth + spacing)}
+                  y={chartHeight - barHeight}
+                  width={barWidth}
+                  height={barHeight}
+                  rx="5"
+                  fill={colors[index % colors.length]}
+                />
+              );
+            })}
+
+            {/* Line connecting data points */}
+            <polyline
+              fill="none"
+              stroke={darkMode ? "#d1d5db" : "#1f2937"}
+              strokeWidth="2"
+              points={data
+                .map((item, index) => `${getX(index)},${getY(item.revenue)}`)
+                .join(" ")}
+            />
+
+            {/* Dots on line */}
+            {data.map((item, index) => (
+              <circle
+                key={index}
+                cx={getX(index)}
+                cy={getY(item.revenue)}
+                r="4"
+                fill={darkMode ? "#f3f4f6" : "#111827"}
+              />
+            ))}
+          </svg>
+
+          {/* Labels */}
+          <div
+            className="flex justify-between mt-4 text-sm"
+            style={{ width: svgWidth }}
+          >
+            {data.map((item, index) => (
+              <div
+                key={index}
+                className="text-center"
+                style={{ width: barWidth + spacing }}
+              >
+                <span className={darkMode ? 'text-gray-300' : 'text-gray-600'}>
                   {item.period}
-                </div>
-                <div className="text-xs font-semibold text-indigo-600 mt-1">
-                  ${(item.revenue/1000).toFixed(1)}K
-                </div>
+                </span>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     );
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-50 flex-col">
+    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
       {/* Top Navigation Bar */}
       <TopNavBar />
       
       {/* Main Content */}
       <div className="flex-grow transition-all duration-300 p-6">
         {/* Header */}
-        <div className="mb-8 flex justify-between items-center flex-wrap gap-4">
+        <div className="mb-8 items-center flex-wrap gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-800 flex items-center">
+            <h1 className={`text-3xl font-bold flex items-center ${
+              darkMode ? 'text-white' : 'text-gray-800'
+            }`}>
               <FaChartBar className="mr-3 text-indigo-600" />
               Dashboard Overview
             </h1>
-            <div className="flex items-center text-gray-500 mt-2">
-              <FaCalendarAlt className="mr-2" />
-              <span>Wednesday, July 2, 2023</span>
-            </div>
           </div>
         </div>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {stats.map((stat) => (
-            <div key={stat.id} className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow border border-gray-100">
+            <div key={stat.id} className={`rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow border ${
+              darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-100'
+            }`}>
               <div className="flex justify-between items-start">
                 <div>
-                  <p className="text-gray-500 text-sm">{stat.title}</p>
-                  <h2 className="text-2xl font-bold mt-1">{stat.value}</h2>
-                  <p className="text-xs text-gray-400 mt-2">{stat.change}</p>
+                  <p className={`text-sm ${
+                    darkMode ? 'text-gray-400' : 'text-gray-500'
+                  }`}>{stat.title}</p>
+                  <h2 className={`text-2xl font-bold mt-1 ${
+                    darkMode ? 'text-white' : 'text-gray-800'
+                  }`}>{stat.value}</h2>
+                  <p className={`text-xs mt-2 ${
+                    darkMode ? 'text-gray-500' : 'text-gray-400'
+                  }`}>{stat.change}</p>
                 </div>
-                <div className="text-2xl p-3 bg-indigo-50 rounded-full text-indigo-600">
+                <div className={`text-2xl p-3 rounded-full ${
+                  darkMode ? 'bg-indigo-900 text-indigo-300' : 'bg-indigo-50 text-indigo-600'
+                }`}>
                   {stat.icon}
                 </div>
               </div>
@@ -224,59 +288,95 @@ const Dashboard = () => {
           {/* Left Column - Quick Actions & Project Status */}
           <div className="lg:col-span-1">
             {/* Quick Actions */}
-            <div className="bg-gradient-to-br from-indigo-50 to-white rounded-xl shadow-md p-6 mb-6 border border-indigo-100">
+            <div className={`rounded-xl shadow-md p-6 mb-6 border ${
+              darkMode 
+                ? 'bg-gradient-to-br from-gray-800 to-gray-900 border-gray-700' 
+                : 'bg-gradient-to-br from-indigo-50 to-white border-indigo-100'
+            }`}>
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-bold text-gray-800">Quick Actions</h2>
+                <h2 className={`text-xl font-bold ${
+                  darkMode ? 'text-white' : 'text-gray-800'
+                }`}>Quick Actions</h2>
                 <FaCog className="text-indigo-500" />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <Link 
                   to="/dashboard/projects" 
-                  className="bg-white hover:bg-indigo-50 rounded-lg p-4 text-center transition-all shadow-sm border border-gray-100"
+                  className={`rounded-lg p-4 text-center transition-all shadow-sm border ${
+                    darkMode 
+                      ? 'bg-gray-700 hover:bg-gray-600 border-gray-600' 
+                      : 'bg-white hover:bg-indigo-50 border-gray-100'
+                  }`}
                 >
                   <div className="bg-gradient-to-r from-indigo-500 to-blue-500 p-3 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-2">
                     <FaProjectDiagram className="text-white text-xl" />
                   </div>
-                  <span className="font-medium text-gray-700">New Project</span>
+                  <span className={`font-medium ${
+                    darkMode ? 'text-gray-200' : 'text-gray-700'
+                  }`}>New Project</span>
                 </Link>
                 
                 <Link 
                   to="/dashboard/skills" 
-                  className="bg-white hover:bg-green-50 rounded-lg p-4 text-center transition-all shadow-sm border border-gray-100"
+                  className={`rounded-lg p-4 text-center transition-all shadow-sm border ${
+                    darkMode 
+                      ? 'bg-gray-700 hover:bg-gray-600 border-gray-600' 
+                      : 'bg-white hover:bg-green-50 border-gray-100'
+                  }`}
                 >
                   <div className="bg-gradient-to-r from-green-500 to-emerald-500 p-3 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-2">
                     <FaStar className="text-white text-xl" />
                   </div>
-                  <span className="font-medium text-gray-700">Add Skills</span>
+                  <span className={`font-medium ${
+                    darkMode ? 'text-gray-200' : 'text-gray-700'
+                  }`}>Add Skills</span>
                 </Link>
                 
                 <Link 
                   to="/dashboard/settings" 
-                  className="bg-white hover:bg-purple-50 rounded-lg p-4 text-center transition-all shadow-sm border border-gray-100"
+                  className={`rounded-lg p-4 text-center transition-all shadow-sm border ${
+                    darkMode 
+                      ? 'bg-gray-700 hover:bg-gray-600 border-gray-600' 
+                      : 'bg-white hover:bg-purple-50 border-gray-100'
+                  }`}
                 >
                   <div className="bg-gradient-to-r from-purple-500 to-violet-500 p-3 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-2">
                     <FaCode className="text-white text-xl" />
                   </div>
-                  <span className="font-medium text-gray-700">Settings</span>
+                  <span className={`font-medium ${
+                    darkMode ? 'text-gray-200' : 'text-gray-700'
+                  }`}>Settings</span>
                 </Link>
                 
                 <Link 
                   to="/dashboard/profile" 
-                  className="bg-white hover:bg-blue-50 rounded-lg p-4 text-center transition-all shadow-sm border border-gray-100"
+                  className={`rounded-lg p-4 text-center transition-all shadow-sm border ${
+                    darkMode 
+                      ? 'bg-gray-700 hover:bg-gray-600 border-gray-600' 
+                      : 'bg-white hover:bg-blue-50 border-gray-100'
+                  }`}
                 >
                   <div className="bg-gradient-to-r from-blue-500 to-cyan-500 p-3 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-2">
                     <FaUser className="text-white text-xl" />
                   </div>
-                  <span className="font-medium text-gray-700">Profile</span>
+                  <span className={`font-medium ${
+                    darkMode ? 'text-gray-200' : 'text-gray-700'
+                  }`}>Profile</span>
                 </Link>
               </div>
             </div>
 
             {/* Project Status Chart */}
-            <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+            <div className={`rounded-xl shadow-md p-6 border ${
+              darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-100'
+            }`}>
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-bold text-gray-800">Project Status</h2>
-                <span className="text-sm text-indigo-600">Distribution</span>
+                <h2 className={`text-xl font-bold ${
+                  darkMode ? 'text-white' : 'text-gray-800'
+                }`}>Project Status</h2>
+                <span className={`text-sm ${
+                  darkMode ? 'text-indigo-400' : 'text-indigo-600'
+                }`}>Distribution</span>
               </div>
               
               <div className="flex flex-col items-center">
@@ -287,8 +387,12 @@ const Dashboard = () => {
                     <div key={index} className="flex items-center">
                       <div className={`w-4 h-4 rounded-full`} style={{ backgroundColor: status.color }}></div>
                       <div className="text-sm">
-                        <span className="font-medium">{status.status}</span>
-                        <span className="text-gray-500 ml-2">{status.value}%</span>
+                        <span className={`font-medium ${
+                          darkMode ? 'text-gray-200' : 'text-gray-800'
+                        }`}>{status.status}</span>
+                        <span className={`ml-2 ${
+                          darkMode ? 'text-gray-400' : 'text-gray-500'
+                        }`}>{status.value}%</span>
                       </div>
                     </div>
                   ))}
@@ -302,19 +406,33 @@ const Dashboard = () => {
             <ColumnChart />
             
             {/* Performance Metrics */}
-            <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-100">
+            <div className={`mt-6 rounded-xl shadow-md p-6 border ${
+              darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-100'
+            }`}>
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-bold text-gray-800">Performance Metrics</h2>
-                <span className="text-sm text-indigo-600">Current Status</span>
+                <h2 className={`text-xl font-bold ${
+                  darkMode ? 'text-white' : 'text-gray-800'
+                }`}>Performance Metrics</h2>
+                <span className={`text-sm ${
+                  darkMode ? 'text-indigo-400' : 'text-indigo-600'
+                }`}>Current Status</span>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {performanceMetrics.map(metric => (
-                  <div key={metric.id} className="bg-gradient-to-r from-indigo-50 to-white p-4 rounded-lg border border-indigo-100">
+                  <div key={metric.id} className={`rounded-lg border p-4 ${
+                    darkMode 
+                      ? 'bg-gradient-to-r from-gray-700 to-gray-800 border-gray-600' 
+                      : 'bg-gradient-to-r from-indigo-50 to-white border-indigo-100'
+                  }`}>
                     <div className="flex justify-between items-center">
                       <div>
-                        <p className="text-sm text-gray-600">{metric.title}</p>
-                        <h3 className="text-2xl font-bold mt-1">{metric.value}%</h3>
+                        <p className={`text-sm ${
+                          darkMode ? 'text-gray-400' : 'text-gray-600'
+                        }`}>{metric.title}</p>
+                        <h3 className={`text-2xl font-bold mt-1 ${
+                          darkMode ? 'text-white' : 'text-gray-800'
+                        }`}>{metric.value}%</h3>
                         <p className="text-xs text-green-500 mt-1">{metric.change}</p>
                       </div>
                       <div className="relative w-16 h-16">
@@ -322,7 +440,7 @@ const Dashboard = () => {
                           <path
                             d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                             fill="none"
-                            stroke="#e6e6e6"
+                            stroke={darkMode ? "#374151" : "#e6e6e6"}
                             strokeWidth="3"
                           />
                           <path
