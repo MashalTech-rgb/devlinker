@@ -354,8 +354,8 @@ const Home = () => {
                 title: "Portfolio Builder",
                 desc: "Interactive portfolio builder with theme customization",
                 tags: ["Next.js", "Firebase", "Framer Motion"],
-                link: "#",
-                  image: "/images/portfolio-builder.png",
+                link: "https://devlinker-three.vercel.app/",
+                  image: "/public/Devlinker.png",
               },
               {
                 title: "Quiz App",
