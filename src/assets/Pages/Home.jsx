@@ -3,6 +3,7 @@ import Footer from "../Component/Footer";
 import eCommerce from "../../../public/E-commerce.png"
 import DevLinker from "../../../public/Devlinker.png"
 import QuizApp from "../../../public/Quiz app.png"
+import HomeImg from "../../../public/homeimg.avif"
 const features = [
   {
     icon: "💻",
@@ -148,7 +149,7 @@ const Home = () => {
           <div className="relative p-6 transform transition-transform duration-500 hover:scale-[1.02]">
             <div className="w-full max-w-md rounded-2xl overflow-hidden shadow-2xl border-8 border-white dark:border-gray-800 relative">
               <img
-                src="/public/homeimg.avif"
+                src={HomeImg}
                 alt="DevLinker Portfolio Example"
                 className="w-full h-auto"
               />
