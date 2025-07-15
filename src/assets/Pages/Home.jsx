@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import Footer from "../Component/Footer";
-import ecommerce from "../../../public/E-commerce.png"
+import eCommerce from "../../../public/E-commerce.png"
+import DevLinker from "../../../public/Devlinker.png"
+import QuizApp from "../../../public/Quiz app.png"
 const features = [
   {
     icon: "💻",
@@ -348,21 +350,21 @@ const Home = () => {
                 desc: "A modern admin dashboard with analytics and product management",
                 tags: ["React", "Tailwind", "Chart.js"],
                 link: "https://e-commerce-vnh8.vercel.app/",
-                 image: ecommerce,
+                 image: eCommerce,
               },
               {
                 title: "Portfolio Builder",
                 desc: "Interactive portfolio builder with theme customization",
                 tags: ["Next.js", "Firebase", "Framer Motion"],
                 link: "https://devlinker-three.vercel.app/",
-                  image: "/public/Devlinker.png",
+                  image: DevLinker,
               },
               {
                 title: "Quiz App",
                 desc: "An interactive and responsive quiz app to test knowledge across various topics with real-time scoring and smooth UI.",
                 tags: ["React", "Node.js", "WebSockets"],
                 link: "https://app-eight-ebon.vercel.app/",
-                  image: "/public/Quiz app.png",
+                  image: QuizApp,
               },
             ].map((project, index) => (
               <div
