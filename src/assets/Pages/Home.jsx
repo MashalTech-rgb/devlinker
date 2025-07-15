@@ -3,7 +3,7 @@ import Footer from "../Component/Footer";
 import eCommerce from "../../../public/E-commerce.png"
 import DevLinker from "../../../public/Devlinker.png"
 import QuizApp from "../../../public/Quiz app.png"
-import HomeImg from "../../../public/homeimg.avif"
+import HomeImg from "../../../public/undraw_winter-designer_a6kq.png"
 const features = [
   {
     icon: "💻",

@@ -7,6 +7,7 @@ import {
 import { FaReact, FaFigma, FaNodeJs, FaDatabase } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { useUser } from '../Context/UserContext';
+import ProfileImg from "../../../public/Profile.jpeg"
 
 const Profile = () => {
   const { userData, updateUserData, darkMode } = useUser();
@@ -117,7 +118,7 @@ const Profile = () => {
                     darkMode ? 'bg-indigo-800' : 'bg-indigo-200'
                   }`}>
                     <img
-                      src="/public/mash.jpeg"
+                      src={ProfileImg}
                       alt="Profile"
                       className="w-full h-full object-cover"
                     />
