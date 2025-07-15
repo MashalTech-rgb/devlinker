@@ -148,7 +148,7 @@ const Home = () => {
           <div className="relative p-6 transform transition-transform duration-500 hover:scale-[1.02]">
             <div className="w-full max-w-md rounded-2xl overflow-hidden shadow-2xl border-8 border-white dark:border-gray-800 relative">
               <img
-                src="/public/undraw_winter-designer_a6kq.png"
+                src="/public/homeimg.avif"
                 alt="DevLinker Portfolio Example"
                 className="w-full h-auto"
               />
@@ -186,11 +186,20 @@ const Home = () => {
             <div className="absolute -top-4 -right-4 bg-white dark:bg-gray-800 p-3 rounded-lg shadow-lg border border-gray-100 dark:border-gray-700 transform transition-transform duration-300 hover:-translate-y-1">
               <div className="flex items-center">
                 <div className="bg-gradient-to-r from-blue-100 to-indigo-100 dark:from-blue-900/30 dark:to-indigo-900/30 p-1.5 rounded-md">
-                  <img
-        src="/public/homeimg.avif"
-        alt="Database Icon"
-        className="h-5 w-5 object-contain"
-      />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5 text-blue-600 dark:text-blue-400"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"
+                    />
+                  </svg>
                 </div>
                 <div className="ml-2">
                   <div className="font-semibold text-sm">Custom Domain</div>
