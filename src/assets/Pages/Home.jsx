@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Footer from "../Component/Footer";
-
+import ecommerce from "../../../public/E-commerce.png"
 const features = [
   {
     icon: "💻",
@@ -348,7 +348,7 @@ const Home = () => {
                 desc: "A modern admin dashboard with analytics and product management",
                 tags: ["React", "Tailwind", "Chart.js"],
                 link: "https://e-commerce-vnh8.vercel.app/",
-                 image: "/public/E-commerce.png",
+                 image: ecommerce,
               },
               {
                 title: "Portfolio Builder",

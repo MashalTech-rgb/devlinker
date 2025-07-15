@@ -8,7 +8,7 @@ import EcommerceImage from '../../../public/E-commerce.png';
 import DevLinkerImage from '../../../public/Devlinker.png';
 import QuizAppImage from '../../../public/Quiz app.png';
 import DominosImage from '../../../public/Dominos.png';
-
+import LibraryManger from "../../../public/Library manger.png"
 const projects = [
   {
     id: 1,
@@ -51,6 +51,16 @@ const projects = [
     github: 'https://vercel.com/mashaltech-rgbs-projects/dominos-b5gz',
     category: 'Full Stack',
     image: DominosImage,
+  },
+  {
+    id:5 ,
+    title: 'API Fetching Data',
+    description: 'Fetching data from json server API and displaying it in a React application.',
+    techStack: ['React', 'Node.js',"Api"],
+    link: 'https://bookapi-livid.vercel.app/',
+    github: 'https://github.com/MashalTech-rgb/Bookapi',
+    category: 'React',
+    image: LibraryManger,
   }
 ];
 
