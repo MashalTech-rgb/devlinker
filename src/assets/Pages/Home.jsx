@@ -123,7 +123,7 @@ const Home = () => {
               </svg>
             </Link>
             <Link
-              to="https://drive.google.com/file/d/1kv8-WWmRJBHJzBVMTnAI3cvDeSAjpVlu/view"
+              to="https://drive.google.com/file/d/1actWlL89woNCyn5mD6whweQpreVd2_Wn/view"
               className="px-4 py-2.5 border-2 border-blue-600 text-blue-600 dark:text-blue-300 rounded-xl hover:bg-blue-50 dark:hover:bg-gray-800/50 transition flex items-center justify-center text-base font-medium group relative"
             >
               <span className="relative z-10">Download Resume</span>
